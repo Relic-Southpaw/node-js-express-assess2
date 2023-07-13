@@ -6,9 +6,9 @@ const { BCRYPT_WORK_FACTOR } = require("../config");
 
 class User {
 
-/** Register user with data. Returns new user data. */
+  /** Register user with data. Returns new user data. */
 
-  static async register({username, password, first_name, last_name, email, phone}) {
+  static async register({ username, password, first_name, last_name, email, phone }) {
     const duplicateCheck = await db.query(
       `SELECT username 
         FROM users 
@@ -79,7 +79,7 @@ class User {
    *
    * */
 
-  static async getAll(username, password) {
+  static async getAll() {
     const result = await db.query(
       `SELECT username,
                 first_name,
@@ -111,11 +111,9 @@ class User {
     );
 
     const user = result.rows[0];
-
     if (!user) {
-      new ExpressError('No such user', 404);
+      throw new ExpressError('No such user', 404);
     }
-
     return user;
   }
 
@@ -162,7 +160,7 @@ class User {
       throw new ExpressError('No such user', 404);
     }
 
-    return true;
+    return;
   }
 }
 
